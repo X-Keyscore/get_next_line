@@ -15,13 +15,17 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <stdio.h> // delete
 
-typedef struct s_list
-{
-	char			*line;
-	struct s_list		*next;
-}					t_list;
+char		*get_next_line(int fd);
 
-char	*get_next_line(int fd);
+char		*get_next_line_loop(int fd);
+
+size_t	ft_strlen(const char *s);
+
+char		*ft_dupcat_allocator(char *src1, char *src2, size_t end_line);
+
+int			ft_search_next_line(char *s);
 
 #endif
