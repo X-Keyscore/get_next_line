@@ -12,53 +12,79 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line_loop(int fd)
+char		*ft_meminit(size_t n)
 {
-	char	*dst;
-	char	*buffer;
-	int		on_read;
-	int		end_line;
+	char		*buffer;
+	size_t	i;
 
-	dst = malloc(1 * sizeof(char));
-	dst[0] = 0;
-	buffer = malloc(BUFFER_SIZE * sizeof(char));
-	on_read = 1;
-	while (on_read)
+	buffer = malloc(n * sizeof(char));
+	i = 0;
+	while (i < n)
+		buffer[i++] = 0;
+	return (buffer);
+}
+
+void		ft_memclear(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		*(unsigned char *)(s + i++) = 0;
+}
+
+size_t		ft_write_line(char **line, char *buffer, size_t last_end, size_t read_count)
+{
+	size_t	start;
+	size_t	end;
+
+	if (read_count == 0)
+		start = last_end;
+	else
+		start = 0;
+	end = ft_search_end(buffer, start);
+	if (end)
 	{
-		read(fd, buffer, BUFFER_SIZE);
-		buffer[BUFFER_SIZE-1] = 0;
-		end_line = ft_search_next_line(buffer);
-		if (end_line != -1)
-			on_read = 0;
-		dst = ft_dupcat_allocator(dst, buffer, end_line);
+		end = ft_get_end(buffer, start);
+		*line = ft_dupcat(*line, buffer, start, end);
+		//printf("1 line = %s\n", *line);
+		return (end + 1);
 	}
-	free(buffer);
-	if (!on_read)
-		return (dst);
-	return (NULL);
+	else
+	{
+		*line = ft_dupcat(*line, buffer, start, BUFFER_SIZE - 1);
+		return (-1);
+	}
 }
 
 char	*get_next_line(int fd)
 {
-	return (get_next_line_loop(fd));
-	/*
-	char	*res;
-	static size_t	old_line = 0;
-	size_t				i;
+	static size_t	last_end;
+	static char		buffer[BUFFER_SIZE];
+	char		*line;
+	size_t	read_count;
+	size_t	res_write_line;
 
-	i = 0;
-	while (i < old_line)
+	line = ft_meminit(1);
+	read_count = 0;
+	while (1)
 	{
-		res = get_next_line_loop(fd);
-		if (res)
+		//printf("\nbuffer = %s\n", buffer);
+		if (last_end || read_count)
 		{
-			free(res);
-			i++;
+			res_write_line = ft_write_line(&line, buffer, last_end, read_count);
+			//printf("\nres = %ld\n", res_write_line);
+			if (res_write_line != -1)
+			{
+				last_end = res_write_line;
+				if (!line[0])
+					return (NULL);
+				return (line);
+			}
 		}
-		else
-			return (NULL);
+		ft_memclear(buffer, BUFFER_SIZE);
+		read(fd, buffer, BUFFER_SIZE-1);
+		read_count++;
 	}
-	if (i == old_line)
-		return (get_next_line_loop(fd));
-	return (NULL);*/
+	return (NULL);
 }

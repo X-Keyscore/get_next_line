@@ -24,8 +24,14 @@ char		*get_next_line_loop(int fd);
 
 size_t	ft_strlen(const char *s);
 
-char		*ft_dupcat_allocator(char *src1, char *src2, size_t end_line);
+char		*ft_dupcat(char *src1, char *src2, size_t start, size_t end);
 
-int			ft_search_next_line(char *s);
+size_t	ft_search_end(char *s, size_t start);
+
+size_t	ft_get_end(char *s, size_t start);
+
+char		*ft_meminit(size_t n);
+
+void		ft_memclear(void *s, size_t n);
 
 #endif

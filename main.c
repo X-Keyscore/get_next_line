@@ -9,17 +9,20 @@ int main ()
 
 	fd = open("test.txt", O_RDONLY);
 	buf = get_next_line(fd);
-	printf("\n%s", buf);
+	printf("result = |%s|\n", buf);
 	free(buf);
-	/*
-	line = 0;
-	while (line < 10)
-	{
-		buf = get_next_line(fd);
-		printf("\n%s", buf);
-		free(buf);
-		line++;
-	}*/
+	printf("=================\n");
+	buf = get_next_line(fd);
+	printf("result = |%s|\n", buf);
+	free(buf);
+	printf("=================\n");
+	buf = get_next_line(fd);
+	printf("result = |%s|\n", buf);
+	free(buf);
+	printf("=================\n");
+	buf = get_next_line(fd);
+	printf("result = |%s|\n", buf);
+	free(buf);
 	close(fd);
 	return (0);
 }
