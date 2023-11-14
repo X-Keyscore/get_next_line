@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/07 17:47:45 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:24:35 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_get_start(char *s)
 	i = 0;
 	while (i < BUFFER_SIZE)
 	{
-		if (s[i] != 0)
+		if (s[i])
 			return (i);
 		i++;
 	}
@@ -29,14 +29,14 @@ size_t	ft_get_start(char *s)
 char	*ft_dupcat(char *src1, char *src2, size_t start, size_t end)
 {
 	char		*dst;
-	size_t	i;
-	size_t	j;
-	size_t	size;
+	size_t		i;
+	size_t		j;
+	size_t		size;
 
 	size = ft_strlen(src1) + (end - start) + 1;
 	if (!size)
 		return (NULL);
-	dst = (char *)malloc(sizeof(char) * (size  + 1));
+	dst = (char *)malloc(sizeof(char) * (size + 1));
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -54,7 +54,7 @@ char	*ft_dupcat(char *src1, char *src2, size_t start, size_t end)
 	return (dst);
 }
 
-int	ft_write(char **line, char *buffer, size_t read_count)
+int	ft_write(char **line, char *buffer)
 {
 	size_t	start;
 	size_t	end;
@@ -68,14 +68,14 @@ int	ft_write(char **line, char *buffer, size_t read_count)
 			return (0);
 		return (1);
 	}
-	*line = ft_dupcat(*line, buffer, start, BUFFER_SIZE - 1);
+	*line = ft_dupcat(*line, buffer, start, BUFFER_SIZE);
 	return (0);
 }
 
 char	*ft_reader(int fd)
 {
-	static char		buffer[BUFFER_SIZE];
-	char			*line;
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*line;
 	size_t		read_count;
 
 	line = ft_meminit(1);
@@ -84,14 +84,15 @@ char	*ft_reader(int fd)
 	{
 		if (ft_get_start(buffer) < BUFFER_SIZE || read_count)
 		{
-			if (ft_write(&line, buffer, read_count) && line)
+			if (ft_write(&line, buffer) && line)
 				return (line);
 			if (!line)
 				break ;
 		}
 		ft_memclear(buffer, BUFFER_SIZE);
-		buffer[read(fd, buffer, BUFFER_SIZE - 1)] = 0;
-		if (!buffer[0])
+		if (!read(fd, buffer, BUFFER_SIZE) && line[0])
+			return (line);
+		else if (!buffer[0])
 			break ;
 		read_count++;
 	}

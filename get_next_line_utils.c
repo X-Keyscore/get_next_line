@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:05:49 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/07 17:06:06 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:26:18 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	ft_memclear(char *s, size_t n)
 		s[i++] = 0;
 }
 
-
 size_t	ft_search_end(char *s, size_t start)
 {
 	size_t	i;
@@ -55,7 +54,7 @@ size_t	ft_search_end(char *s, size_t start)
 			return (1);
 		i++;
 	}
-	if (i != BUFFER_SIZE - 1)
+	if (i != BUFFER_SIZE)
 		return (1);
 	return (0);
 }
