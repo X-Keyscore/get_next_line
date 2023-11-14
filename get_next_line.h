@@ -20,18 +20,20 @@
 
 char		*get_next_line(int fd);
 
-char		*get_next_line_loop(int fd);
+char		*ft_reader(int fd);
+
+int			ft_write(char **line, char *buffer, size_t read_count);
+
+char		*ft_dupcat(char *src1, char *src2, size_t start, size_t end);
 
 size_t	ft_strlen(const char *s);
 
-char		*ft_dupcat(char *src1, char *src2, size_t start, size_t end);
+char		*ft_meminit(size_t n);
+
+void		ft_memclear(char *s, size_t n);
 
 size_t	ft_search_end(char *s, size_t start);
 
 size_t	ft_get_end(char *s, size_t start);
-
-char		*ft_meminit(size_t n);
-
-void		ft_memclear(void *s, size_t n);
 
 #endif

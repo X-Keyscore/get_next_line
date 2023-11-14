@@ -22,31 +22,27 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_dupcat(char *src1, char *src2, size_t start, size_t end)
+char	*ft_meminit(size_t n)
 {
-	char		*dst;
+	char	*buffer;
 	size_t	i;
-	size_t	j;
-	size_t	size;
 
-	size = ft_strlen(src1) + (end - start) + 1;
-	if (!size)
-		return (NULL);
-	//printf("size = %ld\n", size);
-	dst = (char *)malloc(sizeof(char) * (size  + 1));
-	if (!dst)
-		return (NULL);
+	buffer = malloc(n * sizeof(char));
 	i = 0;
-	j = 0;
-	while (src1[j])
-		dst[i++] = src1[j++];
-	j = start;
-	while (src2[j] && j <= end)
-		dst[i++] = src2[j++];
-	dst[i] = 0;
-	free(src1);
-	return (dst);
+	while (i < n)
+		buffer[i++] = 0;
+	return (buffer);
 }
+
+void	ft_memclear(char *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		s[i++] = 0;
+}
+
 
 size_t	ft_search_end(char *s, size_t start)
 {

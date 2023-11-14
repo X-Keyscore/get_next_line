@@ -2,9 +2,7 @@
 
 int main ()
 {
-
 	int fd;
-	//int line;
 	char *buf;
 
 	fd = open("test.txt", O_RDONLY);
@@ -12,14 +10,17 @@ int main ()
 	printf("result = |%s|\n", buf);
 	free(buf);
 	printf("=================\n");
+	
 	buf = get_next_line(fd);
 	printf("result = |%s|\n", buf);
 	free(buf);
 	printf("=================\n");
+
 	buf = get_next_line(fd);
 	printf("result = |%s|\n", buf);
 	free(buf);
 	printf("=================\n");
+
 	buf = get_next_line(fd);
 	printf("result = |%s|\n", buf);
 	free(buf);

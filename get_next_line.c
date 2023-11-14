@@ -12,79 +12,98 @@
 
 #include "get_next_line.h"
 
-char		*ft_meminit(size_t n)
-{
-	char		*buffer;
-	size_t	i;
-
-	buffer = malloc(n * sizeof(char));
-	i = 0;
-	while (i < n)
-		buffer[i++] = 0;
-	return (buffer);
-}
-
-void		ft_memclear(void *s, size_t n)
+size_t	ft_get_start(char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < n)
-		*(unsigned char *)(s + i++) = 0;
+	while (i < BUFFER_SIZE)
+	{
+		if (s[i] != 0)
+			return (i);
+		i++;
+	}
+	return (i);
 }
 
-size_t		ft_write_line(char **line, char *buffer, size_t last_end, size_t read_count)
+char	*ft_dupcat(char *src1, char *src2, size_t start, size_t end)
+{
+	char		*dst;
+	size_t	i;
+	size_t	j;
+	size_t	size;
+
+	size = ft_strlen(src1) + (end - start) + 1;
+	if (!size)
+		return (NULL);
+	dst = (char *)malloc(sizeof(char) * (size  + 1));
+	if (!dst)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (src1[j])
+		dst[i++] = src1[j++];
+	j = start;
+	while (src2[j] && j <= end)
+	{
+		dst[i++] = src2[j];
+		src2[j++] = 0;
+	}
+	dst[i] = 0;
+	free(src1);
+	return (dst);
+}
+
+int	ft_write(char **line, char *buffer, size_t read_count)
 {
 	size_t	start;
 	size_t	end;
 
-	if (read_count == 0)
-		start = last_end;
-	else
-		start = 0;
-	end = ft_search_end(buffer, start);
-	if (end)
+	start = ft_get_start(buffer);
+	if (ft_search_end(buffer, start))
 	{
 		end = ft_get_end(buffer, start);
 		*line = ft_dupcat(*line, buffer, start, end);
-		//printf("1 line = %s\n", *line);
-		return (end + 1);
+		if (!*line)
+			return (0);
+		return (1);
 	}
-	else
-	{
-		*line = ft_dupcat(*line, buffer, start, BUFFER_SIZE - 1);
-		return (-1);
-	}
+	*line = ft_dupcat(*line, buffer, start, BUFFER_SIZE - 1);
+	return (0);
 }
 
-char	*get_next_line(int fd)
+char	*ft_reader(int fd)
 {
-	static size_t	last_end;
 	static char		buffer[BUFFER_SIZE];
-	char		*line;
-	size_t	read_count;
-	size_t	res_write_line;
+	char			*line;
+	size_t		read_count;
 
 	line = ft_meminit(1);
 	read_count = 0;
 	while (1)
 	{
-		//printf("\nbuffer = %s\n", buffer);
-		if (last_end || read_count)
+		if (ft_get_start(buffer) < BUFFER_SIZE || read_count)
 		{
-			res_write_line = ft_write_line(&line, buffer, last_end, read_count);
-			//printf("\nres = %ld\n", res_write_line);
-			if (res_write_line != -1)
-			{
-				last_end = res_write_line;
-				if (!line[0])
-					return (NULL);
+			if (ft_write(&line, buffer, read_count) && line)
 				return (line);
-			}
+			if (!line)
+				break ;
 		}
 		ft_memclear(buffer, BUFFER_SIZE);
-		read(fd, buffer, BUFFER_SIZE-1);
+		buffer[read(fd, buffer, BUFFER_SIZE - 1)] = 0;
+		if (!buffer[0])
+			break ;
 		read_count++;
 	}
+	free(line);
 	return (NULL);
+}
+
+char	*get_next_line(int fd)
+{
+	char	*test_reader;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &test_reader, 0) < 0)
+		return (NULL);
+	return (ft_reader(fd));
 }
