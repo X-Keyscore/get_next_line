@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:03 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/14 16:26:02 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:29:23 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <stdio.h> // delete
 
 char		*get_next_line(int fd);
 

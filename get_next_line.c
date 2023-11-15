@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/14 16:24:35 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:37:16 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ char	*ft_reader(int fd)
 
 char	*get_next_line(int fd)
 {
-	char	*test_reader;
-
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &test_reader, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	return (ft_reader(fd));
 }
