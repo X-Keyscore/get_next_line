@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/14 19:37:16 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:20:22 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ int	ft_write(char **line, char *buffer)
 	return (0);
 }
 
-char	*ft_reader(int fd)
+char	*ft_reader(int fd, size_t read_count)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
-	size_t		read_count;
 
 	line = ft_meminit(1);
-	read_count = 0;
+	if (!line)
+		return (NULL);
 	while (1)
 	{
 		if (ft_get_start(buffer) < BUFFER_SIZE || read_count)
@@ -102,7 +102,10 @@ char	*ft_reader(int fd)
 
 char	*get_next_line(int fd)
 {
+	size_t	read_count;
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	return (ft_reader(fd));
+	read_count = 0;
+	return (ft_reader(fd, read_count));
 }

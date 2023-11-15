@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:03 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/15 12:29:23 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:19:53 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+# include <stdio.h>
+
 char		*get_next_line(int fd);
 
-char		*ft_reader(int fd);
+char		*ft_reader(int fd, size_t read_count);
 
 int			ft_write(char **line, char *buffer);
 
