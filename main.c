@@ -5,7 +5,7 @@ int main ()
 	int fd;
 	char *buf;
 
-	fd = open("big_line_no_nl", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	buf = get_next_line(fd);
 	printf("result = |%s|\n", buf);
 	free(buf);
