@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/27 19:12:28 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/27 20:06:28 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_get_start(char *s)
 {
@@ -72,27 +72,28 @@ int	ft_write(char **line, char *buffer)
 	return (0);
 }
 
-char	*ft_reader(int fd, size_t read_count)
+char	*ft_reader(int fd, size_t read_count, char **static_buffer)
 {
-	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 
 	line = ft_meminit(1);
 	if (!line)
 		return (NULL);
+	if (!*static_buffer)
+		*static_buffer = ft_meminit(BUFFER_SIZE + 1);
 	while (1)
 	{
-		if (ft_get_start(buffer) < BUFFER_SIZE || read_count)
+		if (ft_get_start(*static_buffer) < BUFFER_SIZE || read_count)
 		{
-			if (ft_write(&line, buffer) && line)
+			if (ft_write(&line, *static_buffer) && line)
 				return (line);
 			if (!line)
 				break ;
 		}
-		ft_memclear(buffer, BUFFER_SIZE);
-		if (!read(fd, buffer, BUFFER_SIZE) && line[0])
+		ft_memclear(*static_buffer, BUFFER_SIZE);
+		if (!read(fd, *static_buffer, BUFFER_SIZE) && line[0])
 			return (line);
-		else if (!buffer[0])
+		else if (!*static_buffer[0])
 			break ;
 		read_count++;
 	}
@@ -102,10 +103,11 @@ char	*ft_reader(int fd, size_t read_count)
 
 char	*get_next_line(int fd)
 {
-	size_t	read_count;
+	size_t		read_count;
+	static char	*buffer[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_count = 0;
-	return (ft_reader(fd, read_count));
+	return (ft_reader(fd, read_count, &buffer[fd]));
 }

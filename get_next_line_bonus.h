@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:03 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/27 19:39:33 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/11/27 19:49:09 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -19,7 +19,7 @@
 
 char		*get_next_line(int fd);
 
-char		*ft_reader(int fd, size_t read_count);
+char		*ft_reader(int fd, size_t read_count, char **static_buffer);
 
 int			ft_write(char **line, char *buffer);
 
