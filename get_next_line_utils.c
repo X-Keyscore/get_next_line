@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:05:49 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/14 16:26:18 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:58:45 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*ft_meminit(size_t n)
 	size_t	i;
 
 	buffer = malloc(n * sizeof(char));
+	if (!buffer)
+		return (NULL);
 	i = 0;
 	while (i < n)
 		buffer[i++] = 0;
