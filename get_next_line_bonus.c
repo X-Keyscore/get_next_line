@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/27 20:06:28 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/04 12:02:16 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_reader(int fd, size_t read_count, char **static_buffer)
 		return (NULL);
 	if (!*static_buffer)
 		*static_buffer = ft_meminit(BUFFER_SIZE + 1);
-	while (1)
+	while (1 && *static_buffer)
 	{
 		if (ft_get_start(*static_buffer) < BUFFER_SIZE || read_count)
 		{
