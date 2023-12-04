@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/11/27 19:12:28 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:44:43 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_write(char **line, char *buffer)
 
 char	*ft_reader(int fd, size_t read_count)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1] = {0};
 	char		*line;
 
 	line = ft_meminit(1);
