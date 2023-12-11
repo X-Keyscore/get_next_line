@@ -81,7 +81,7 @@ char	*ft_reader(int fd, char **static_buffer, size_t read_count)
 		return (NULL);
 	if (!*static_buffer)
 		*static_buffer = ft_meminit(BUFFER_SIZE + 1);
-	while (1)
+	while (*static_buffer)
 	{
 		if (ft_get_start(*static_buffer) < BUFFER_SIZE || read_count)
 		{
