@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define BUFF_SIZE 42
+
 char		*get_next_line(int fd);
 
 char		*ft_reader(int fd, size_t read_count, char **static_buffer);
