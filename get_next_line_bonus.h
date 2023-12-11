@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:03 by anraymon          #+#    #+#             */
-/*   Updated: 2023/12/04 11:49:15 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:33:08 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFF_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 char		*get_next_line(int fd);
 
-char		*ft_reader(int fd, size_t read_count, char **static_buffer);
+char		*ft_reader(int fd, char **static_buffer, size_t read_count);
 
 int			ft_write(char **line, char *buffer);
 

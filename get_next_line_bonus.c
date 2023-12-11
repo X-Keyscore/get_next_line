@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/12/04 12:02:16 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:54:50 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_write(char **line, char *buffer)
 	return (0);
 }
 
-char	*ft_reader(int fd, size_t read_count, char **static_buffer)
+char	*ft_reader(int fd, char **static_buffer, size_t read_count)
 {
 	char		*line;
 
@@ -81,7 +81,7 @@ char	*ft_reader(int fd, size_t read_count, char **static_buffer)
 		return (NULL);
 	if (!*static_buffer)
 		*static_buffer = ft_meminit(BUFFER_SIZE + 1);
-	while (1 && *static_buffer)
+	while (1)
 	{
 		if (ft_get_start(*static_buffer) < BUFFER_SIZE || read_count)
 		{
@@ -103,11 +103,18 @@ char	*ft_reader(int fd, size_t read_count, char **static_buffer)
 
 char	*get_next_line(int fd)
 {
-	size_t		read_count;
 	static char	*buffer[1024];
+	char		*line;
+	size_t		read_count;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_count = 0;
-	return (ft_reader(fd, read_count, &buffer[fd]));
+	line = ft_reader(fd, &buffer[fd], read_count);
+	if (!line)
+	{
+		free(buffer[fd]);
+		buffer[fd] = NULL;
+	}
+	return (line);
 }

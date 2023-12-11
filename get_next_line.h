@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:03 by anraymon          #+#    #+#             */
-/*   Updated: 2023/12/04 11:49:11 by anraymon         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:04:51 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define BUFF_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 char		*get_next_line(int fd);
 
