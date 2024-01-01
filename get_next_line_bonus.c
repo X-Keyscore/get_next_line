@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/12/12 00:54:50 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:28:11 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*ft_reader(int fd, char **static_buffer, size_t read_count)
 				break ;
 		}
 		ft_memclear(*static_buffer, BUFFER_SIZE);
-		if (!read(fd, *static_buffer, BUFFER_SIZE) && line[0])
+		if (!read(fd, *static_buffer, BUFFER_SIZE) && line && line[0])
 			return (line);
 		else if (!*static_buffer[0])
 			break ;

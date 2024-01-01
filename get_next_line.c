@@ -6,7 +6,7 @@
 /*   By: anraymon <anraymon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:06:00 by anraymon          #+#    #+#             */
-/*   Updated: 2023/12/11 21:17:06 by anraymon         ###   ########.fr       */
+/*   Updated: 2024/01/01 23:27:50 by anraymon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,14 @@ char	*ft_reader(int fd, size_t read_count)
 				break ;
 		}
 		ft_memclear(buffer, BUFFER_SIZE);
-		if (!read(fd, buffer, BUFFER_SIZE) && line[0])
+		if (!read(fd, buffer, BUFFER_SIZE) && line && line[0])
 			return (line);
 		else if (!buffer[0])
 			break ;
 		read_count++;
 	}
-	free(line);
+	if (line)
+		free(line);
 	return (NULL);
 }
 
